@@ -1,43 +1,11 @@
-import styled from 'styled-components'
 import { Document, Page, pdfjs } from 'react-pdf'
 import { truncateText } from '../../utils'
 import { FC } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { ItemTypes } from '../FileItems'
+import { FileName, ImageContainer, ItemContainer } from './styled'
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
-const ImageContainer = styled.div`
-  img,
-  canvas {
-    max-height: 144px !important;
-    max-width: 136px !important;
-  }
-`
-const ItemContainer = styled.div`
-  width: 175px;
-  height: 205.11px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  border-radius: 10px;
-  margin: 0 10px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  transition: 0.2s;
-  &:hover {
-    background: #dfdfdf;
-  }
-`
-const FileName = styled.span`
-  font-family: 'Open Sans';
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 19px;
-  letter-spacing: 0em;
-  text-align: center;
-  color: #49494a;
-  margin-top: 15px;
-`
+
 interface FileItemProps {
   file: File
   id: string
@@ -99,7 +67,7 @@ const FileItem: FC<FileItemProps> = ({ file, id, moveFile, findFile }) => {
       <ImageContainer>
         {file.type === 'application/pdf' ? (
           <Document file={createFileSrc(file)}>
-            <Page pageNumber={1} />
+            <Page height={144} width={136} pageNumber={1} />
           </Document>
         ) : (
           <img src={createFileSrc(file)} alt='img' />
